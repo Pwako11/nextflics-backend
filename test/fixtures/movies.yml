@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  adult: MyString
+  backdrop_path: MyString
+  language: MyString
+  title: MyString
+  overview: MyString
+  poster_path: MyString
+  release-date: MyString
+  rating: MyString
+  likes: MyString
+
+two:
+  adult: MyString
+  backdrop_path: MyString
+  language: MyString
+  title: MyString
+  overview: MyString
+  poster_path: MyString
+  release-date: MyString
+  rating: MyString
+  likes: MyString
