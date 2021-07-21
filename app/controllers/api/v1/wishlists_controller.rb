@@ -1,4 +1,4 @@
-class WishlistsController < ApplicationController
+class Api::V1::WishlistsController < ApplicationController
   before_action :set_wishlist, only: [:show, :update, :destroy]
 
   # GET /wishlists

@@ -1,4 +1,4 @@
-class RecommendationsController < ApplicationController
+class Api::V1::RecommendationsController < ApplicationController
   before_action :set_recommendation, only: [:show, :update, :destroy]
 
   # GET /recommendations
