@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_19_191000) do
+ActiveRecord::Schema.define(version: 2021_07_21_074528) do
 
   create_table "movies", force: :cascade do |t|
     t.boolean "adult"
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 2021_07_19_191000) do
     t.integer "likes"
   end
 
+  create_table "recommendations", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id", null: false
+    t.integer "movie_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "review_id", null: false
+    t.index ["movie_id"], name: "index_recommendations_on_movie_id"
+    t.index ["review_id"], name: "index_recommendations_on_review_id"
+    t.index ["user_id"], name: "index_recommendations_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.string "content"
     t.integer "rate"
@@ -34,15 +46,6 @@ ActiveRecord::Schema.define(version: 2021_07_19_191000) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "user_activities", force: :cascade do |t|
-    t.string "recommendation"
-    t.string "wishlist"
-    t.integer "user_id", null: false
-    t.integer "movie_id", null: false
-    t.index ["movie_id"], name: "index_user_activities_on_movie_id"
-    t.index ["user_id"], name: "index_user_activities_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "username"
@@ -50,8 +53,21 @@ ActiveRecord::Schema.define(version: 2021_07_19_191000) do
     t.string "password_digest"
   end
 
+  create_table "wishlists", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id", null: false
+    t.integer "movie_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_wishlists_on_movie_id"
+    t.index ["user_id"], name: "index_wishlists_on_user_id"
+  end
+
+  add_foreign_key "recommendations", "movies"
+  add_foreign_key "recommendations", "reviews"
+  add_foreign_key "recommendations", "users"
   add_foreign_key "reviews", "movies"
   add_foreign_key "reviews", "users"
-  add_foreign_key "user_activities", "movies"
-  add_foreign_key "user_activities", "users"
+  add_foreign_key "wishlists", "movies"
+  add_foreign_key "wishlists", "users"
 end

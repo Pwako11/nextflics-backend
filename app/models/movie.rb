@@ -1,8 +1,9 @@
 class Movie < ApplicationRecord    
-    has_many :user_activities
+    has_many :recommendations
 	has_many :reviews
-	has_many :users, through: :user_activities
+    has_many :wishlists
+	has_many :users, through: :recommendations
     has_many :users, through: :reviews 
-
+    has_many :users, through: :wishlists
     
 end

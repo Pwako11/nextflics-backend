@@ -7,10 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Review.destroy_all
-UserActivity.destroy_all
+Recommendation.destroy_all
+Wishlist.destroy_all
 User.destroy_all
 Movie.destroy_all
-# Genre.destroy_all
 
 User.create(name: "Patrick", username: "PAkolo", email: "PAkolo@hotmail.com", password: "password")
 User.create(name: "Jane", username: "JDoe", email: "JDoe@hotmail.com", password: "password")
@@ -816,4 +816,5 @@ puts "after seeding the database:"
 puts "... There are #{User.count} users."
 puts "... There are #{Movie.count} movies."
 puts "... There are #{Review.count} reviews."
-puts "... There are #{UserActivity.count} user activities."
+puts "... There are #{Recommendation.count} user recommendations."
+puts "... There are #{Wishlist.count} user recommendations."
