@@ -1,14 +1,18 @@
 class ApplicationController < ActionController::API
 
-    include ActionController::Helpers
-    helpers do 
+include ::ActionController::Cookies 
+    # include ActionController::Helpers
+    # helpers do 
         def current_user
-            #currently a mocked version of "being logged in"
-            User.first
+            User.find_by(id: session[:user_id])
+            
+            # if session[:user_id]
+            #     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+            # end 
         end 
 
         def logged_in?
             !!current_user
         end 
-    end
+    # end
 end
