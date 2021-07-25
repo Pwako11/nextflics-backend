@@ -7,7 +7,7 @@ class Api::V1::SessionsController < ApplicationController
             render json: @user
         else
             render json: {
-                error: "Invalid Credentials"
+                error: "Invalid credentials"
             }
         end
     end 
@@ -17,8 +17,15 @@ class Api::V1::SessionsController < ApplicationController
             render json: current_user
         else 
             render json: {
-                error: "No User sessions logged"
+                error: "No user sessions logged"
             }
         end 
+    end 
+
+    def destroy
+        session.clear
+        render json: {
+            notice: "You are signed out"
+        }
     end 
 end
