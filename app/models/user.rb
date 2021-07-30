@@ -7,5 +7,6 @@ class User < ApplicationRecord
 	has_many :movies, through: :recommendations
     has_many :movies, through: :reviews 
     has_many :movies, through: :wishlists
+    validates_uniqueness_of :email, :username
     validates_presence_of :name, :username, :email, :password_digest
 end

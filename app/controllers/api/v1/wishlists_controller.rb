@@ -3,9 +3,18 @@ class Api::V1::WishlistsController < ApplicationController
 
   # GET /wishlists
   def index
-    @wishlists = Wishlist.all
 
-    render json: @wishlists
+    if logged_in?
+      
+      @wishlists = current_user.wishlists 
+      whishlist = WishlistSerializer.new(@wishlists).serializable_hash.to_json
+          
+      render json: whishlist
+    else 
+      render json: {
+        error: "you must be logged in to see trips"
+      }
+    end 
   end
 
   # GET /wishlists/1

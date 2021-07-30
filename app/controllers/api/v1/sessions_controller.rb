@@ -4,7 +4,11 @@ class Api::V1::SessionsController < ApplicationController
         @user = User.find_by(username: params[:session][:username])
         if @user && @user.authenticate(params[:session][:password])
             session[:user_id] = @user.id
-            render json: @user
+            signed_in = UserSerializer.new(@user).serializable_hash.to_json
+            
+            puts signed_in
+
+            render json: signed_in
         else
             render json: {
                 error: "Invalid credentials"
@@ -14,7 +18,12 @@ class Api::V1::SessionsController < ApplicationController
     
     def get_current_user
         if logged_in?
-            render json: current_user
+            puts current_user
+                current_session = UserSerializer.new(current_user).serializable_hash.to_json
+                
+                puts current_session  
+
+                render json: current_session
         else 
             render json: {
                 error: "No user sessions logged"
@@ -24,6 +33,7 @@ class Api::V1::SessionsController < ApplicationController
 
     def destroy
         session.clear
+
         render json: {
             notice: "You are signed out"
         }
