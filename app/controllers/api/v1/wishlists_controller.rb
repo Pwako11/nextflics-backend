@@ -25,11 +25,15 @@ class Api::V1::WishlistsController < ApplicationController
   # POST /wishlists
   def create
     @wishlist = Wishlist.new(wishlist_params)
+    
 
     if @wishlist.save
-      render json: @wishlist, status: :created, location: @wishlist
+      render json: WishlistSerializer.new(@wishlist).serializable_hash.to_json, status: :created
     else
-      render json: @wishlist.errors, status: :unprocessable_entity
+      error_resp ={
+        error: @wishlist.errors.full_messages.to-sentence
+      }
+      render json: error_resp, status: :unprocessable_entity
     end
   end
 
