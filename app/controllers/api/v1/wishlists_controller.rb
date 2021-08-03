@@ -31,7 +31,7 @@ class Api::V1::WishlistsController < ApplicationController
       render json: WishlistSerializer.new(@wishlist).serializable_hash.to_json, status: :created
     else
       error_resp ={
-        error: @wishlist.errors.full_messages.to-sentence
+        error: @wishlist.errors.full_messages.to_sentence
       }
       render json: error_resp, status: :unprocessable_entity
     end

@@ -3,9 +3,18 @@ class Api::V1::RecommendationsController < ApplicationController
 
   # GET /recommendations
   def index
-    @recommendations = Recommendation.all
 
-    render json: @recommendations
+    if logged_in?
+
+      @recommendations = current_user.recommendations 
+      serializedRecommendation = RecommendationSerializer.new(@recommendations).serializable_hash.to_json  
+      
+      render json: serializedRecommendation
+    else
+      render json: {
+        error: "you must be logged in to review recommendations"
+      } 
+    end
   end
 
   # GET /recommendations/1
@@ -18,9 +27,12 @@ class Api::V1::RecommendationsController < ApplicationController
     @recommendation = Recommendation.new(recommendation_params)
 
     if @recommendation.save
-      render json: @recommendation, status: :created, location: @recommendation
+      render json: RecommendationSerializer.new(@recommendation).serializable_hash.to_json, status: :created
     else
-      render json: @recommendation.errors, status: :unprocessable_entity
+      error_resp={
+        error: @recommendation.errors.full_messages.to_sentence
+      }
+      render json: error_resp, status: :unprocessable_entity
     end
   end
 

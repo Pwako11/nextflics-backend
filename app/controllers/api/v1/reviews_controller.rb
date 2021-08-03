@@ -3,9 +3,18 @@ class Api::V1::ReviewsController < ApplicationController
 
   # GET /reviews
   def index
-    @reviews = Review.all
 
-    render json: @reviews
+    if logged_in?
+
+      @reviews = current_user.reviews 
+      serializedReview = ReviewSerializer.new(@reviews).serializable_hash.to_json
+
+      render json: serializedReview
+    else
+      render json: {
+        error: "you must be logged in to review reviews"
+      } 
+    end 
   end
 
   # GET /reviews/1
@@ -18,18 +27,26 @@ class Api::V1::ReviewsController < ApplicationController
     @review = Review.new(review_params)
 
     if @review.save
-      render json: @review, status: :created, location: @review
+      render json: ReviewSerializer.new(@review).serializable_hash.to_json, status: :created
     else
-      render json: @review.errors, status: :unprocessable_entity
+      error_resp ={
+        error: @review.errors.full_messages.to_sentence  
+      }
+      render json: error_resp, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /reviews/1
   def update
     if @review.update(review_params)
-      render json: @review
+      serializedReview = ReviewSerializer.new(@review).serializable_hash.to_json
+      
+      render json: serializedReview
     else
-      render json: @review.errors, status: :unprocessable_entity
+      error_resp ={
+        error: @review.errors.full_messages.to_sentence  
+      }
+      render json: error_resp, status: :unprocessable_entity
     end
   end
 
