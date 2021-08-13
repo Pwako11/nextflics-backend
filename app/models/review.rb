@@ -5,5 +5,5 @@ class Review < ApplicationRecord
     has_many :movies, through: :recommendations
     has_many :users, through: :recommendations
 
-    
+    validates_presence_of :content, :rate
 end
