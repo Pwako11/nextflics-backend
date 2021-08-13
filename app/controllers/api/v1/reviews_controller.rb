@@ -52,7 +52,15 @@ class Api::V1::ReviewsController < ApplicationController
 
   # DELETE /reviews/1
   def destroy
-    @review.destroy
+    if @review.destroy
+      render json: "Selected review was successfully deleted", status: ok
+    else
+      error_resp ={
+        error: "Review not found" 
+      }
+      render json: error_resp, status: :unprocessable_entity
+      
+    end 
   end
 
   private
