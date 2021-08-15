@@ -48,7 +48,14 @@ class Api::V1::WishlistsController < ApplicationController
 
   # DELETE /wishlists/1
   def destroy
-    @wishlist.destroy
+    if @wishlist.destroy
+      render json: { data: "Selected wishlist was successfully deleted"},  status: :ok
+    else
+      error_resp ={
+        error: "Review not found" 
+      }
+      render json: error_resp, status: :unprocessable_entity
+    end 
   end
 
   private
