@@ -58,6 +58,6 @@ class Api::V1::RecommendationsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def recommendation_params
-      params.require(:recommendation).permit(:name, :user_id, :movie_id)
+      params.require(:recommendation).permit(:name, :user_id, :movie_id, :review_id)
     end
 end
