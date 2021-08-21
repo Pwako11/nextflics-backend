@@ -27,9 +27,13 @@ class Api::V1::MoviesController < ApplicationController
   # PATCH/PUT /movies/1
   def update
     if @movie.update(movie_params)
-      render json: @movie
+      serializedMovie = MovieSerializer.new(@movie).serializable_hash.to_json
+      render json: serializedMovie 
     else
-      render json: @movie.errors, status: :unprocessable_entity
+      error_resp ={
+        error: @movie.errors.full_messages.to_sentence  
+      }
+      render json: error_resp, status: :unprocessable_entity
     end
   end
 
@@ -46,6 +50,6 @@ class Api::V1::MoviesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def movie_params
-      params.require(:movie).permit(:adult, :backdrop_path, :language, :title, :overview, :poster_path, :release-date, :rating, :likes)
+      params.require(:movie).permit(:adult, :backdrop_path, :language, :title, :overview, :poster_path, :release_date, :rating, :likes)
     end
 end
