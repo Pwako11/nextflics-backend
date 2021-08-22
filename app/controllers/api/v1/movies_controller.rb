@@ -3,9 +3,17 @@ class Api::V1::MoviesController < ApplicationController
 
   # GET /movies
   def index
-    @movies = Movie.all
 
-    render json: @movies
+      @movies = Movie.all
+      @movies.map do |movie| 
+          total = movie.reviews.sum(:rate)
+          count = movie.reviews.length 
+          averagerate = total/count
+          movie[:rating]= averagerate
+      end 
+      
+    serializedMovies = MovieSerializer.new(@movies).serializable_hash.to_json
+    render json: serializedMovies
   end
 
   # GET /movies/1
