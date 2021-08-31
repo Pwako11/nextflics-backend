@@ -6,12 +6,14 @@ class Api::V1::MoviesController < ApplicationController
 
       @movies = Movie.all
       @movies.map do |movie| 
-          total = movie.reviews.sum(:rate)
-          count = movie.reviews.length 
-          averagerate = total/count
-          movie[:rating]= averagerate
+          if movie.reviews.length > 0
+            total = movie.reviews.sum(:rate)
+            count = movie.reviews.length
+            average_rate = total/count
+            movie[:rating]= average_rate
+          end 
       end 
-      
+
     serializedMovies = MovieSerializer.new(@movies).serializable_hash.to_json
     render json: serializedMovies
   end
