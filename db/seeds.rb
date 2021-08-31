@@ -174,18 +174,6 @@ Movie.create!(
     },
     {
     adult: false,
-    backdrop_path: "http://localhost:3000/image/jack_movie.jpg",
-    genre: "Animation, Action, Adventure, Fantasy",
-    language: "ja",
-    title: "劇場版「鬼滅の刃」無限列車編",
-    overview: "Tanjirō Kamado, joined with Inosuke Hashibira, a boy raised by boars who wears a boar's head, and Zenitsu Agatsuma, a scared boy who reveals his true power when he sleeps, boards the Infinity Train on a new mission with the Fire Hashira, Kyōjurō Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!",
-    poster_path: "http://localhost:3000/image/jack_movie.jpg",
-    release_date: "2020-10-16",
-    rating: 0,
-    likes: 0
-    },
-    {
-    adult: false,
     backdrop_path: "http://localhost:3000/image/the_marksman.jpg",
     genre: "Action, Thriller, Crime",
     language: "en",
