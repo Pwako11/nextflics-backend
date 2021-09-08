@@ -47,7 +47,14 @@ class Api::V1::RecommendationsController < ApplicationController
 
   # DELETE /recommendations/1
   def destroy
-    @recommendation.destroy
+    if @recommendation.destroy
+      render json: { data: "Selected review was successfully deleted"},  status: :ok
+    else
+      error_resp ={
+        error: "Recommendation not found"
+      }
+      render json: error_resp, status: unprocessable_entity
+    end
   end
 
   private
